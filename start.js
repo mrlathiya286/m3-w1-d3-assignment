@@ -1,22 +1,22 @@
-require('dotenv').config();
-const mongoose = require('mongoose');
+require("dotenv").config();
+const mongoose = require("mongoose");
+const app = require("./app");
 
-mongoose.connect(process.env.DATABASE, {
-    useNewURLParser: true,
-    useUnifiedTopology: true
-});
-
-mongoose.connection
-.on('open', () => {
-    console.log('Mongoose connection open');
-})
-.on('error', (err) => {
+mongoose
+  .connect(process.env.DATABASE, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("Mongoose connection open");
+  })
+  .catch((err) => {
     console.log(`Connection error: ${err.message}`);
-});
+  });
 
-require('./models/Registration');
-const app = require('./app');
+// Ensure the model is required to register the schema
+require("./models/Registration");
 
-const server = app.listen(3000, function() {
-    console.log(`Express is running on port ${server.address().port}`);
+const server = app.listen(3000, function () {
+  console.log(`Express is running on port ${server.address().port}`);
 });
